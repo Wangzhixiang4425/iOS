@@ -1,0 +1,117 @@
+h 文件里声明存取方法和实例变量，m 文件负责实现
+
+//
+//  BNRItem.h
+//  RandomItems
+//
+//  Created by 王志翔 on 16/3/28.
+//  Copyright © 2016年 王志翔. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface BNRItem : NSObject
+
+{
+    NSString *_itemName;
+    NSString *_serialNumber;
+    int _valueDollars;
+    NSDate *_dateCreated;
+}
+
+- (void)setItemName:(NSString *)str;
+- (NSString *)itemName;
+- (void)setSerialNumber:(NSString *)str;
+- (NSString *)serialNumber;
+- (void)setValueDollars:(int)dollar;
+- (int)valueDollars;
+- (void)setDateCreated:(NSDate *)date;
+- (NSDate *)dateCreated;
+- (instancetype)initWithItemName:(NSString *)name valueIndollars:(int)v SerialNumber:(NSString *)number;
+- (instancetype)initWithItemName:(NSString *)name;
++ (instancetype)randomItem;
+
+@end
+
+m 文件
+//
+//  BNRItem.m
+//  RandomItems
+//
+//  Created by 王志翔 on 16/3/28.
+//  Copyright © 2016年 王志翔. All rights reserved.
+//
+
+#import "BNRItem.h"
+
+@implementation BNRItem
+
++ (instancetype)randomItem{
+    NSArray *randomAdjectiveList = @[@"Fluffy", @"Rusty", @"Shiny"];
+    NSArray *randomNounList = @[@"Bear", @"Spork", @"Mac"];
+    NSInteger adjectiveIndex = arc4random() % [randomAdjectiveList count];
+    NSInteger nounIndex = arc4random() % [randomNounList count];
+    NSString *name = [NSString stringWithFormat:@"%@ %@",randomAdjectiveList[adjectiveIndex], randomNounList[nounIndex]];
+    NSString *serial = [NSString stringWithFormat:@"%c%c%c%c%c",'A'+arc4random()%26, '1'+arc4random()%10, 'A'+arc4random()%26, '1'+arc4random()%10, 'A'+arc4random()%26];
+    int randomValue = arc4random()%100;
+    BNRItem *item = [[BNRItem alloc] initWithItemName:name valueIndollars:randomValue SerialNumber:serial];
+    return item;
+}
+
+- (instancetype)initWithItemName:(NSString *)name valueIndollars:(int)v SerialNumber:(NSString *)number{
+    self = [super init];
+    if (self) {
+        _itemName = name;
+        _valueDollars = v;
+        _serialNumber = number;
+        _dateCreated = [[NSDate alloc] init];
+    }
+    return self;
+}
+
+- (instancetype)initWithItemName:(NSString *)name{
+    return [self initWithItemName:name valueIndollars:0 SerialNumber:@""];
+}
+
+- (instancetype)init{
+    return [self initWithItemName:@"itemName"];
+}
+
+- (void)setItemName:(NSString *)str{
+    _itemName = str;
+}
+
+- (NSString *)itemName{
+    return _itemName;
+}
+
+- (void)setSerialNumber:(NSString *)str{
+    _serialNumber = str;
+}
+
+- (NSString *)serialNumber{
+    return _serialNumber;
+}
+
+- (void)setValueDollars:(int)dollar{
+    _valueDollars = dollar;
+}
+
+- (int)valueDollars{
+    return _valueDollars;
+}
+
+- (void)setDateCreated:(NSDate *)date{
+    _dateCreated = date;
+}
+
+- (NSDate *)dateCreated{
+    return _dateCreated;
+}
+
+- (NSString *)description{
+    NSString *descriptionString = [[NSString alloc] initWithFormat:@"%@ %@ %@ %d",self.itemName, self.serialNumber, self.dateCreated, self.valueDollars];
+    return descriptionString;
+}
+
+@end
