@@ -1,0 +1,30 @@
+将Single View Controller 改为 Empy View Controller
+  1.删掉初始的 ViewController 和 storyboard
+  2.info中的plist文件删除Main storyboard file base name 选项
+  3.在AppDelegate.m 文件中创建并初始化 window，设置window的rootViewController 属性
+  4.为其添加子视图
+  
+UIView及其子类的drawRect:方法改写示例：
+  - (void)drawRect:(CGRect)rect{
+    CGRect bounds = self.bounds;
+    CGPoint center;
+    center.x = (bounds.origin.x + bounds.size.width)/2;
+    center.y = (bounds.origin.y + bounds.size.height)/2;
+    float maxRadius = hypotf(bounds.size.height, bounds.size.width) /2;
+    UIBezierPath *path = [[UIBezierPath alloc] init];
+    for (float currentRadius = maxRadius; currentRadius>0; currentRadius -= 20) {
+        [path moveToPoint:CGPointMake(center.x + currentRadius, center.y)];
+        [path addArcWithCenter:center radius:currentRadius startAngle:0 endAngle:M_PI*2 clockwise:YES];
+        path.lineWidth = 10;
+        [[UIColor lightGrayColor] setStroke];
+        [path stroke];
+    }
+  }
+
+UIBezier 类
+  UIImage、UIBezierPath和NSString都提供了至少一种用于在drawRect:中绘图的方法
+  这些绘图方法会在drawRect:执行时分别将图像、图形和文本绘制到视图的图层上。
+  使用这些绘制代码既简单又方便，但是绘制方法内部封装了很多复杂的绘图代码。
+  无论绘制JPEG、PDF还是视图的图层，都是由CoreGraphics框架完成的。
+  本章使用的 UIBezier，其实是将 CoreGraphics代码封装在一系列方法中，以方便开发者调用，降低了绘图难度 。
+  为了真正了解绘图的过程与原理 ，必须深入学习 CoreGraphics是如何工作的。
