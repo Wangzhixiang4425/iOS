@@ -1,0 +1,16 @@
+UIScrollView
+  UIScrollView（包括它的子类 UITableView 和 UICollectionView）是 iOS 开发中最常用也是最有意思的 UI 组件
+  大部分 App 的核心界面都是基于三者之一或三者的组合实现
+
+  contentSize
+    决定了系统的取景范围
+  setPagingEnabled:
+    设置系统是否自动分页
+
+
+触发触摸事件
+  改写 UIView 子类的touchesBegan: withEvent:等方法即可（不需将 UIView 子类的父类改为 UIControl）
+
+frame 与 bounds
+  frame:基于父视图左上角的坐标系
+  bounds:基于自己的坐标系
