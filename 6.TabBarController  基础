@@ -1,0 +1,15 @@
+UITabBarController的使用
+  1.创建并初始化 UITabBarController 对象，设置为 window 的根控制器
+  2.创建各个 Tab 的视图控制器对象（确认已经在各个控制器的 init 方法中改写了self.tabBarIetm的title 和 image 属性）
+  3.将各个 Tab 的视图控制器对象放在一个数组里并赋给 UITabBarController 的 viewControllers 属性
+  
+利用 xib 文件初始化视图控制器
+  1.修改xib 文件的class
+  2.右键文档略图里的File's Owner，关联 xib 文件里的插座变量、动作方法和控制器里的属性、方法（不要忘记 View 属性，否则会出错）
+  3.即使方法"initWithNibName: bundle:"的两个参数都为 nil，控制器仍然会在应用程序包中查找和自己同名的 xib 文件
+
+本地通知
+  1.创建并初始化 UILocalNotification 对象，设置其 alertBody和 fireDate 属性
+  2.调用[UIApplication sharedApplication]的scheduleLocalNotification:方法
+  3.为iOS8.0以上的应用注册通知，先调用UIUserNotificationSettings的类方法settingsForTypes:返回通知设置对象，
+    再用它做参数调用application的registerUserNotificationSettings:方法，这样应用才可以获取通知权限
