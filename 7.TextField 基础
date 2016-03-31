@@ -1,0 +1,26 @@
+textField 的几个常见属性
+  borderStyle——决定边框样式
+  text——文本框中已经输入的字符串
+  placeholder——占位符
+  returnkeyType——回车键的类型
+  autocapitalizationType——自动大写的类型
+  autocorrectionType——启用/禁用拼写建议
+  keyboardType——设置弹出的键盘类型
+  secureTextEntry——启动/禁用文本框的安全输入功能
+  
+textField 的委托
+  - (void) textFieldDidEndEditing:( UITextField *)textField;
+  - (void) textFieldDidBeginEditing:( UITextField *)textField;
+  - (BOOL) textFieldShouldEndEditing:( UITextField *)textField;
+  - (BOOL) textFieldShouldBeginEditing:( UITextField *)textField;
+  - (BOOL) textFieldShouldClear:( UITextField *)textField;
+  - (BOOL) textFieldShouldReturn:( UITextField *)textField;
+    在textFieldShouldReturn:中调用resignFirstResponder 方法用来关闭键盘
+
+委托方法中的第一个参数通常为对象自身
+
+为视图添加InterpolatingMotionEffect，代码示例
+  UIInterpolatingMotionEffect *motionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+  motionEffect.maximumRelativeValue = @(25);
+  motionEffect.minimumRelativeValue = @(-25);
+  [label addMotionEffect:motionEffect];
