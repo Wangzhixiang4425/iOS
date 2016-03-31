@@ -1,0 +1,45 @@
+必须实现的两个tableView数据源
+  tableView:numberOfRowsInSection:
+  tableView: cellForRowAtIndexPath:
+
+tableViewCell的两种生成方法
+  iOS6之前:"dequeueReusableCellWithIdentifier:"
+    static NSString *cellIdentifier = @"cellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+      cell = [ [ UITableViewCell alloc]  initWithStyle:  UITableViewCellStyleDefault  reuseIdentifier:  cellIdentifier ] ] ;
+    }
+  每次重用队列里如果没有可重用的cell,就手动新创建一个cell,
+
+  iOS6之后:"dequeueReusableCellWithIdentifier: forIndexPath:"
+    static NSString *cellIdentifier = @"cellIdentifier";
+    [ self.tableView  registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
+    UITableViewCell  *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+  这个函数的实现是这样的如果在重用队列里面没有可重用的cell就自动创建一个cell,无需人工alloc init
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+修改 tableViewController 及其子类的 tableView 的frame
+  在 viewDidLoad 方法中tableView还没有加载出来，须在 viewWillAppear 中修改
+    newFrame = CGRectMake(x,y,width,height);
+    self.tableView.frame = newFrame;
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+自定义负责存储表格数据的模型类(Model)
+  @property (nonatomic, readonly) NSArray *allItems;
+    读取特性设置为 readonly，再在 m 文件中覆盖其 getter 方法返回在 m文件中声明的 NSMutableArray属性，编译器即不会为其自动创建实例变量
+    (NSMuatbleArray 为 NSArray 子类，可以看做特殊的 NSArray；属性声明、返回值声明均不会改变对象类型)
+  
+  + (instancetype)sharedStore{
+    static BNRItemStore *sharedStore = nil;
+    if (!sharedStore) {
+        sharedStore = [[BNRItemStore alloc] initPrivate];
+    }
+    return sharedStore;
+  }
+  /*这段代码将 sharedStore 声明为了静态变量。等某个定义了静态变量的方法返回时，程序不会释放相应的变量。
+  静态变量和全局变量一致，不保存在栈中。
+  sharedStore变量的初始值是 nil。当程序第一次执行sharedStore方法时，会创建一个BNRItemStore对象，并将新创建的对象的地址赋给sharedStore变量。
+  当程序再次执行sharedStore方法时，无论是第几次，sharedStore 仍会指向最初的那个BNRItemStore对象。
+  sharedStore 指向的 BNRItemStore 对象永远不会被释放*/
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+@class 与#import
+  @class 的作用是告诉编译器，该代码需要声明某个类，但是无需知道具体的实现细节，可以大幅节省编译时间，并避免交叉编译
+  另一些文件中，需要向该类发送消息，即编译器必须知道具体的实现细节，则须用#import
