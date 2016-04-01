@@ -1,0 +1,16 @@
+编辑模式
+  通过 TableViewController 及其子类的 isEditing 属性来查询TableView 是否在编辑状态
+  调用 TableViewController 及其子类的setEditing: animtated:方法来使 TableView 进入或离开编辑状态
+  （可以向 sender 发送 setTitle 消息使交互逻辑更清晰）
+
+增加行
+  更新数据源对象
+  然后向 tableView 发送insertRowsAtIndexPaths 消息来更新视图
+
+删除行：实现tableView: commitEditingStyle: forRowAtIndexPath:
+  先判断 tableView 对象请求的是删除操作，if(editingStyle == UITableViewCellEditingStyleDelete)
+  调用数据源的删除方法
+  然后向 tableView 发送insertRowsAtIndexPaths: withRowAnimation:消息来更新视图
+  
+移动行：实现tableView: moveRowAtIndexPath: toIndexPath:
+  调用数据源的移动数据的方法
