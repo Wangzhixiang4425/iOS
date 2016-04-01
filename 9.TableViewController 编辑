@@ -14,3 +14,14 @@
   
 移动行：实现tableView: moveRowAtIndexPath: toIndexPath:
   调用数据源的移动数据的方法
+
+添加自定义headerView作为tableHeaderView
+  将 nib 文件与控制器的 headerView 相关联（同时关联动作方法）
+  覆盖headerView 的 getter
+    - (UIView *)headerView{
+    if (!_headerView) {
+        [[NSBundle mainBundle] loadNibNamed:@"HeaderView" owner:self options:nil];
+    }
+    return _headerView;
+    }
+  调用tableView的setTableHeaderView:方法
