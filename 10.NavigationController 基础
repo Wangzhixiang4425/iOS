@@ -1,0 +1,24 @@
+创建并初始化NavigationController
+UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:(viewController* )];
+
+把 viewController 推入NavigationController栈顶
+[self.navigationController pushViewController:(UIViewController* )];
+//self 为触发操作的视图控制器，其 navigationController 属性会返回其父对象中距离自己最近的navigationController
+//能且只能向navigationController发送pushViewController:消息
+
+NSDateFormatter
+  dateFormatter.dateStyle = NSDateFormatterShortStyle;
+  dateFormatter.timeStyle = NSDateFormatterShortStyle;
+  向dateFormatter对象发送"stringFromDate:"可返回指定格式的 NSString 对象
+
+endEditing 和 resignFirstReponder 区别
+  endEditing：由视图发送，发送后会使视图及其所有子视图放弃第一响应者(resignFirstResponder)，可用在viewWillDisappear 中
+  resignFirstReponder：仅对发送该消息的对象有效，通常用于隐藏 textField 的键盘，相比 endEditing更有效率
+
+navigationItem
+  NavigationController的子控制器均有此属性
+  nsvigationItem 又有(NSString *)title、(UIBarButtonItem *)rightBarButtonItem、(UIBarButtonItem *)leftBarButtonItem三个属性
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: target: action:@selector()];
+    //initWithBarButtonSystemItem 的参数会指定该按钮的类型，并决定该按钮的小图标是什么形状
+  self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self 的 editButtonItem 属性是控制器继承而来的
