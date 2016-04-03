@@ -1,0 +1,16 @@
+ImagePickerController
+  创建并初始化ImagePickerController实例对象
+  设置其委托属性，并为其委托类实现(同时遵守UINavigationControllerDelegate、UIImagePickerControllerDelegate两个协议)
+    - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+        UIImage *image = info[UIImagePickerControllerOriginalImage];
+        /*do something*/
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+        /*do something*/
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+  设置 ImagePickerController 对象的源：发送类方法"isSourceTypeAvailable:"，然后设置实例的属性
+        [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]
+  向需要显示 ImagePickerController 对象的视图控制器发送 presentViewController: 消息
+
