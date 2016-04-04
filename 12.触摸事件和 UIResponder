@@ -13,3 +13,6 @@ UIResponder
         如果没有为某个 UIReponder覆盖处理触摸事件的方法，那么它的 nextResponder 指针所指的对象会尝试处理相应事件
         如果某个 UIResponder 对象及其所有父对象都没有覆盖触摸事件的方法，传递到 UIApplication 后系统就会丢弃该事件
 
+NSValue
+    NSDictionnay 的键不能是 UITouch 对象，但可以是 NSValue 对象
+    可以向 NSValue 发送类方法"valueWithNonretainedObject:"将 Objective-C 对象转化为 NSValue 然后将其作为 NSDictionary 的键
