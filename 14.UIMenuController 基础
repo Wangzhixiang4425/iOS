@@ -1,0 +1,8 @@
+MenuController
+  [self becomeFirstResponder];
+  UIMenuController *menuController = [UIMenuController sharedMenuController];
+  UIMenuItem *deleteMenu = [[UIMenuItem alloc] initWithTitle:@"Delete" action:@selector(deleteLine:)];
+  menuController.menuItems = @[deleteMenu];
+  [menuController setTargetRect:CGRectMake(point.x, point.y, 2, 2) inView:self];
+  [menuController setMenuVisible:YES animated:YES];
+  //显示 MenuController 的对象必须为第一响应者;故需改写canBecomeFirstResponder方法，返回YES
