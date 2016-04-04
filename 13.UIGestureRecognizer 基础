@@ -1,0 +1,19 @@
+TapGestureRecognizer
+  UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+  doubleTap.numberOfTapsRequired = 2;
+  doubleTap.delaysTouchesBegan = YES;//延迟覆盖的 touchesBegan 方法
+  [self addGestureRecognizer:doubleTap];
+  //可以向 singleTap 对象调用"requireGestureRecognizerToFail:"方法，使系统等到 doubleTap 识别失败再响应 singleTap 的方法
+  //doubleTap:的参数为被触发的手势识别器，向该 GestureRecognizer 发送 locationInView 即可获得其坐标
+  
+LongPressGestureRecognizer
+  UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+  [self addGestureRecognizer:longPress];
+
+PanGestureRecognizer
+  panGestureRecoginer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveLine:)];
+  panGestureRecoginer.delegate = self;
+  panGestureRecoginer.cancelsTouchesInView = NO;
+  [self addGestureRecognizer:panGestureRecoginer];
+  //实现委托中的方法"gestureRecognizer: shouldRecognizeSimultaneouslyWithGestureRecognizer:"
+  //在触发的方法中，向手势识别器发送translationInView:方法可获得识别器的位移
