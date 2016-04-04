@@ -1,0 +1,15 @@
+触摸事件的触发：改写三个方法
+    - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+    - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+    - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+
+视图的multipleTouchEnabled属性默认为 No，更改为 Yes 即可支持多点触控
+
+UIResponder
+    UIView、UIViewController、UIWindow、UIApplication均为 UIResponder 的子类
+        虽然不能向UIViewController 对象直接发送触摸事件，但该对象能够通过响应对象链接收事件
+    UIResponder对象都拥有一个名为 nextResponder的指针，相关的指针可以组成一个响应对象链
+        nextResponder 指针方向:TouchEvent-> UIView-> UIView-> UIViewController-> UIWindow-> UIApplication
+        如果没有为某个 UIReponder覆盖处理触摸事件的方法，那么它的 nextResponder 指针所指的对象会尝试处理相应事件
+        如果某个 UIResponder 对象及其所有父对象都没有覆盖触摸事件的方法，传递到 UIApplication 后系统就会丢弃该事件
+
