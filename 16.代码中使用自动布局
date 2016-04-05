@@ -1,0 +1,11 @@
+LayoutConstraint:视觉化格式语言
+  NSDictionary *viewMaps = @{@"imageView":self.imageView,@"toolBar":self.toolBar,@"dataLabel":self.dateLabel};
+  NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[imageView]-0-|" options:0 
+      metrics:nil views:viewMaps];
+  NSArray *verticalContraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[dataLabel]-8-[imageView]-8-[toolBar]" options:0 
+      metrics:nil views:viewMaps];
+  //注意 options 的参数为0
+  //最后为视图调用 addConstraints:方法，通常为受约束视图的父视图
+  
+若某个约束是根据另一个约束计算而来，则无法使用视觉化格式语言，只能使用 NSLayoutConstraint 的另一个类方法
+  + constraintWithItem: attribute: relatedBy: toItem: attribute: multiplier: constant:
