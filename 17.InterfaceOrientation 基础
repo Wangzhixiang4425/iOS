@@ -1,0 +1,16 @@
+应用的的界面方向
+  点击 Project的General 栏，Deployment Info 中的Device Orientation 复选框
+  
+视图控制器的界面方向
+  覆盖控制器方法:-(UIInterfaceOrientationMask)supportedInterfaceOrientations;
+
+为特定的界面方向触发一些事件
+  获取当前InterfaceOrientation:
+    [[UIApplication sharedApplication] statusBarOrientation]
+  判断是否是特定方向，函数UIInterfaceOrientationIsLandscape()
+  覆盖控制器的转向方法:
+    -(void)willRotateToInterfaceOrientation: duration:
+    - (void)willAnimateRotationToInterfaceOrientation: duration:
+
+判断设备是 iPad 还是 iPhone
+  [UIDevice currentDevice]的userInterfaceIdiom属性
