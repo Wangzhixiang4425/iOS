@@ -1,0 +1,21 @@
+PopoverController
+  添加协议UIPopoverControllerDelegate
+  调用“initWithContentViewController:”，并为其 delegate 属性赋值,完成协议方法"popoverControllerDidDismissPopover:"
+  PopoverController 显示/关闭 其Popover(消息发送者均为 PopoverController)
+    显示："presentPopoverFromBarButtonItem: permittedArrowDirections: animated:"
+    遗弃："dismissPopoverAnimated:"
+  检验 Popover 是否可见："isPopoverVisible"方法
+
+模态 present
+  显示/关闭（注意调用方法的对象）
+    显示:[self presentViewController:ViewController animated:YES completion:nil];
+    关闭:[self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    //关闭方法由“被显示控制器的presentingViewController属性获得显示自己的那个控制器”调用
+  被显示控制器的"modalPresentationStyle"属性可决定其显示样式
+
+多线程应用中创建线程安全的单例
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    //do something
+    //比如创建一个静态变量
+  });
