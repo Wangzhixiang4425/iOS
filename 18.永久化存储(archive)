@@ -1,0 +1,19 @@
+固化
+    为自定义模型类添加协议 NSCoding
+    为自定义模型类添加解码方法- (instancetype)initWithCoder:(NSCoder *)decoder
+        [decoder decodeObjectForKey:@"同一个对象的key应该一样"]
+    为自定义模型类添加编码方法- (void)encodeWithCoder:(NSCoder *)encoder
+        [encoder encodeObject:myObject forKey:@"同一个对象的key应该一样"]
+保存/读取 数据
+    [NSKeyedUnarchiver unarchiveObjectWithFile:]
+    [NSKeyedArchiver archiveRootObject: toFile:]
+
+访问文件系统
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [documentDirectories firstObject];
+    [path stringByAppendingPathComponent:@"pathComponent"]
+
+通过 NSData将UIImage对象写入文件
+    写入:先调用函数UIImageJPEGRepresentation(image, 0.5)将image提取为NSData对象，再对NSData对象调用实例方法"writeToFile: atomically:"
+    读取:调用 UIImage 的类方法"imageWithContentsOfFile"
+    删除:[[NSFileManager defaultManager] removeItemAtFath: error:]
