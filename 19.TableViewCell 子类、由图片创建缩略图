@@ -1,0 +1,13 @@
+通过 nib 创建 TableViewCell 子类
+    nib 文件file's owner 的类为空
+    nib 文件拖入一个 UIView 作为 TableViewCell 的内容视图，将该视图的类改为 TableViewCell 的类名
+    为 TableViewCell 子类包含的视图添加约束时，Vertical 方向的约束大小之和不宜为固定值，可将约束的 Relation 属性改为 Greater Than or Equal
+    为 TableViewCell 子类添加动作方法
+        TableViewCell 作为视图对象不应该直接访问控制器或模型对象，可为其声明一个 Block 属性，然后在控制器中对 Block 赋值
+            //TableViewCell.m文件中实现IBAction动作方法
+            if (self.actionBlock) {
+                self.actionBlock();
+            }
+
+通过上下文创建缩略图
+    
