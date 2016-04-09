@@ -10,4 +10,29 @@
             }
 
 通过上下文创建缩略图
-    
+ - (void)setThumbnailFromImage:(UIImage *)image{
+    CGSize origImageSize = image.size;
+        // 缩略图的矩形
+    CGRect newRect = CGRectMake(0, 0, 40, 40);
+        // 计算出缩放比例
+    float ratio = MAX(newRect.size.width / origImageSize.width, newRect.size.height / origImageSize.height);
+        // 创建图形上下文
+    UIGraphicsBeginImageContextWithOptions(newRect.size, NO, 0.0);
+        // 创建一个形状为圆角矩形的 BezierPath 对象
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:newRect cornerRadius:5.0];
+        // 修剪
+    [path addClip];
+        // 把方法的 Image 参数置于矩形中心
+    CGRect projectRect;
+    projectRect.size.width = ratio * origImageSize.width;
+    projectRect.size.height = ratio * origImageSize.height;
+    projectRect.origin.x = (newRect.size.width - projectRect.size.width) / 2.0;
+    projectRect.origin.y = (newRect.size.height - projectRect.size.height) / 2.0;
+        // 绘图
+    [image drawInRect:projectRect];
+        // 取图
+    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
+    self.thumbnail = smallImage;
+        // 清理上下文
+    UIGraphicsEndImageContext();
+}
