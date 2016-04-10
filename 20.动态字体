@@ -1,0 +1,16 @@
+获得用户首选字体的 Font 对象
+    向 UIFont 发送类方法"preferredFontForTextStyle:UIFontTextStyleBody"
+ 
+获取描述用户首选字体大小的 NSString 对象
+    NSString *userSize = [[UIApplication sharedApplication] preferredContentSizeCategory];
+    返回的 userSize 从大到小是UIContentSizeCategoryExtraExtraExtraLarge -> UIContentSizeCategoryExtraSmall
+    
+修改 Label 或 TextField 的 Font 属性即可改变其字体
+
+添加/移除响应用户首选字体改变通知"UIContentSizeCategoryDidChangeNotification"的方法
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        添加:[defaultCenter addObserver:self selector:@selector(updateFont) name:UIContentSizeCategoryDidChangeNotification object:nil]
+        移除:[defaultCenter removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil]
+
+修改自动约束优先级：
+    当约束相互冲突时，优先级低的约束先被舍弃
