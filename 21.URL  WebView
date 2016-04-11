@@ -1,0 +1,35 @@
+URL、URLRequest、URLSessionTask、URLSession
+    URL:网址
+        NSURL *url = [NSURL URLWithString:@"https://www.google.com/"]
+        
+    URLRequest:浏览网页时发送的请求
+        NSURLRequest *req = [NSURLRequest requestWithURL:url];
+        
+    URLSession:生产URLSessionTask 的工厂，可设置其生产出的URLSessionTask 的通用属性，如委托、请求头的内容、是否允许在移动网络下发送请求等
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        _session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+        //委托参数为自己的 URLSession对象
+        
+    URLSessionTask:表示一个 URLRequest 的声明周期，可以对其执行取消、暂停和继续操作。有DataTask、UploadTask、Download 三个子类
+        NSURLSessionDataTask *dataTask = [_session dataTaskWithRequest:req completionHandler:
+         ^(NSData *data, NSURLResponse *response, NSError *error) {     //do something
+         }];
+        [dataTask resume];      //执行 dataTask
+        
+        在completionHandler 的块，默认是在后台进程被执行的，所以可以使用 dispatch_async 函数在主线程中操作视图对象
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //do something
+            });
+——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+由Data 对象解析出 JSON 数据
+    NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+WebView
+    对 WebView 对象调用"loadRequest"方法即可得到相应网页的视图
+——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+响应认证要求(authentication challenge)
+    添加委托NSURLSessionDelegate,实现方法"URLSession: task: didReceiveChallenge: completionHandler:"
+    NSURLCredential *cred =
+        [NSURLCredential credentialWithUser:@"BigNerdRanch" password:@"AchieveNerdvana" persistence:NSURLCredentialPersistenceForSession];
+    completionHandler(NSURLSessionAuthChallengeUseCredential, cred);
+    //completionHandler为该方法中第四个参数
