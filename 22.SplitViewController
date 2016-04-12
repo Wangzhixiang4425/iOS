@@ -1,0 +1,21 @@
+SplitViewController
+    先判断设备是否为 iPad，若是，则创建并初始化 SplitViewController，为其viewControllers 属性赋值
+    viewControllers的元素最好为 NavigationController，可以方便地使用 NavigationItem
+    
+    在 Master 控制器中判断其是否有 SplitViewController 属性
+        if (self.splitViewController == nil) 
+
+SplitViewControllerDelegate
+    在 SplitViewController 创建后，为其 delegate 属性赋值
+    完成委托方法
+    splitViewController: willHideViewController: withBarButtonItem: forPopoverController:
+        barButtonItem.title = @"Courses";
+        detailViewController.navigationItem.leftBarButtonItem = barButtonItem;
+            //使 iPad 在竖屏模式下点击 barButtonItem可以弹出masterViewController
+
+    splitViewController: willShowViewController: invalidatingBarButtonItem:
+        if (barButtonItem == detailViewController.navigationItem.leftBarButtonItem) {
+            detailViewController.navigationItem.leftBarButtonItem = nil;
+        }
+            //使 iPad 从竖屏转到横屏模式时，barButtonItem 消失
+(以上两委托方法已被弃用)
