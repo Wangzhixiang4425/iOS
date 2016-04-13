@@ -1,3 +1,36 @@
+NSManagedObjectContext、NSPersistentStoreCoordinator、NSManagedObjectModel
+    NSManagedObjectModel，与NSPersistentStoreCoordinator相互配合的模型文件
+        _model = [NSManagedObjectModel mergedModelFromBundles:nil]
+    
+    NSPersistentStoreCoordinator，被 ManagedObjectContext 执行，指定文件路径、配置信息
+        psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model]
+        NSString *pathString = [self itemArchivePath]
+        NSURL *url = [NSURL fileURLWithPath:pathString]
+        [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&error]
+    
+    NSManagedObjectContext，负责应用和数据库间的交互
+        _context = [[NSManagedObjectContext alloc] init]
+        _context.persistentStoreCoordinator = psc
+
+载入、保存、添加和删除Entity
+    载入
+        NSFetchRequest *request = [[NSFetchRequest alloc] init]
+        NSEntityDescription *entitpDescription = [NSEntityDescription entityForName:@"" inManagedObjectContext:self.context]
+        request.entity = entitpDescription
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"" ascending:]
+        request.sortDescriptors = @[sortDescriptor];  //此属性为数组
+        NSArray *result = [self.context executeFetchRequest:request error:&error]
+        //NSFetchRequest 对象可以设置特定的 NSPredicate 对象，使 Core Data 只返回符合条件的对象。
+    保存
+        [self.context save:&error]
+    添加
+        向NSEntityDescription调用类方法"insertNewObjectForEntityForName: inManagedObjectContext:"，
+        即可返回Entity 相对应的 NSManagedObject 子类
+    删除
+        [self.context deleteObject:item]
+        //[self.privateItems removeObjectIdenticalTo:item]
+        //通过 context 操作模型文件删除实体 和 数据源文件的删除操作要同步
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 Data Model 文件
     Entity —— 实体，对应数据库中的表格，对应 Objective-C 的类
     Attribute —— 属性，对于数据库中的列，对应 Objective-C 的属性
@@ -11,22 +44,6 @@ NSManagedObject（NSObject 子类）
     通过 Xcode 自动生成针对实体的类
         新建文件，选中 Core Data分页，选中NSManagedObject subclass；注意修改自动生成的属性的类(将 NSNumber 改为 int 或 double)
         实现awakeFromInsert方法(对象加入数据库时会被调用)
-————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-NSManagedObjectContext、NSPersistentStoreCoordinator、NSManagedObjectModel
-    NSManagedObjectModel，与NSPersistentStoreCoordinator相互配合的模型文件
-        _model = [NSManagedObjectModel mergedModelFromBundles:nil];
-    
-    NSPersistentStoreCoordinator，被 ManagedObjectContext 执行
-        psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model]
-        NSString *pathString = [self itemArchivePath]
-        NSURL *url = [NSURL fileURLWithPath:pathString]
-        [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&error]
-    
-    NSManagedObjectContext，负责应用和数据库间的交互
-        _context = [[NSManagedObjectContext alloc] init]
-        _context.persistentStoreCoordinator = psc
-
-
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 Core Data 存储 Image
     选中Attribute，将 Type 改为transformable，name修改为ImageTransformer
