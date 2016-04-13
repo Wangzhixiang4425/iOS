@@ -12,6 +12,20 @@ NSManagedObject（NSObject 子类）
         新建文件，选中 Core Data分页，选中NSManagedObject subclass；注意修改自动生成的属性的类(将 NSNumber 改为 int 或 double)
         实现awakeFromInsert方法(对象加入数据库时会被调用)
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+NSManagedObjectContext、NSPersistentStoreCoordinator、NSManagedObjectModel
+    NSManagedObjectModel，与NSPersistentStoreCoordinator相互配合的模型文件
+        _model = [NSManagedObjectModel mergedModelFromBundles:nil];
+    
+    NSPersistentStoreCoordinator，被 ManagedObjectContext 执行
+        psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model]
+        NSString *pathString = [self itemArchivePath]
+        NSURL *url = [NSURL fileURLWithPath:pathString]
+        [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&error]
+    
+    NSManagedObjectContext，负责应用和数据库间的交互
+        _context = [[NSManagedObjectContext alloc] init]
+        _context.persistentStoreCoordinator = psc
+
 
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 Core Data 存储 Image
