@@ -24,7 +24,7 @@ NSManagedObjectContext、NSPersistentStoreCoordinator、NSManagedObjectModel
     保存
         [self.context save:&error]
     添加
-        向NSEntityDescription调用类方法"insertNewObjectForEntityForName: inManagedObjectContext:"，
+        向NSEntityDescription调用类方法 "insertNewObjectForEntityForName: inManagedObjectContext:"
         即可返回Entity 相对应的 NSManagedObject 子类
     删除
         [self.context deleteObject:item]
