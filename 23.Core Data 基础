@@ -1,0 +1,6 @@
+Data Model 文件
+    Entity —— 实体，对应数据库中的表格，对应 Objective-C 的类
+    Attribute —— 属性，对于数据库中的列，对应 Objective-C 的属性
+    Relationship —— 关系，对应 Objective-C 类之间的指针（一对一、一对多）
+        修改完 Destination 后记得修改Inverse
+
