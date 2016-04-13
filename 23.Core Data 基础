@@ -1,6 +1,36 @@
 Data Model 文件
     Entity —— 实体，对应数据库中的表格，对应 Objective-C 的类
     Attribute —— 属性，对于数据库中的列，对应 Objective-C 的属性
-    Relationship —— 关系，对应 Objective-C 类之间的指针（一对一、一对多）
-        修改完 Destination 后记得修改Inverse
+    Relationship —— 关系，对应 Objective-C 类之间的指针
+        选中 RelationShip 后，可以修改其Type 为一对一、一对多
+        修改Destination 后记得修改Inverse
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+NSManagedObject（NSObject 子类）
+    通过 Core Data 取回的对象，均为NSManagedObject 对象或 NSManagedObject 子类的对象
+    选中 Entity 后，可以修改CoreData 返回对象的类(若不修改则返回默认的 NSManagedObject)
+    通过 Xcode 自动生成针对实体的类
+        新建文件，选中 Core Data分页，选中NSManagedObject subclass；注意修改自动生成的属性的类(将 NSNumber 改为 int 或 double)
+        实现awakeFromInsert方法(对象加入数据库时会被调用)
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+Core Data 存储 Image
+    选中Attribute，将 Type 改为transformable，name修改为ImageTransformer
+    创建NSValueTransformer子类：ImageTransformer，覆盖其三个方法
+        + (Class)transformedValueClass{
+            return [UIImage class];
+        }
+        
+        - (id)transformedValue:(id)value{
+            if (!value) {
+            return nil;
+        }
+            if ([value isKindOfClass:[NSData class]]) {
+            return value;
+            }
+            return UIImagePNGRepresentation(value);
+        }
+        
+        - (id)reverseTransformedValue:(id)value{
+            return [UIImage imageWithData:value];
+        }
