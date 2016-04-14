@@ -1,0 +1,4 @@
+NSNumberFormatter
+    创建并初始化 NumberFormatter ，为其numberStyle 赋值（可赋为NSNumberFormatterCurrencyStyle）
+    然后向其调用 "stringFromeNumber" 方法，即可返回由 NSNumber 转化而成的 NSString 对象
+
