@@ -1,4 +1,7 @@
 NSNumberFormatter
     创建并初始化 NumberFormatter ，为其numberStyle 赋值（可赋为NSNumberFormatterCurrencyStyle）
-    然后向其调用 "stringFromeNumber" 方法，即可返回由 NSNumber 转化而成的 NSString 对象
+    然后向NumberFormatter调用 "stringFromeNumber" 方法，即可返回由 NSNumber 转化而成的 NSString 对象
+    可向 notificationCenter 注册NSCurrentLocaleDidChangeNotification通知，在地区变化时重绘视图
 
+nib文件的本地化
+    选中 project，Info 栏，Localizations 点"+"，为相应的 nib 文件增加本地化字符串
