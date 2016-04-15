@@ -1,0 +1,11 @@
+UserDefaults
+    向 NSUserDefaults 发送类方法 "standardUserDefaults" 可以获取 userDefaults 单例
+    注册/获取/设置
+        注册:向UserDefaults 单例调用对象方法 "registerDefaults:" (参数为 NSDictionary 对象)
+        获取:向UserDefaults 单例调用对象方法 "objectForKey:"
+        设置:向UserDefaults 单例调用对象方法 "setObject: forKey:"
+    //UserDefaults 存储的值只能为 Objective-C 对象，若存储 int 或 float，可转为 NSNumber 对象
+    //也可向UserDefaults 单例调用 "integerForKey:"；相当于先调用objectForKey 再对返回的 NSNumber 对象调用 "intValue" 方法
+
+Settings Bundle
+    新建文件，Resource 分栏里选择 Settings Bundle
