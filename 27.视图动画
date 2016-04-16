@@ -1,0 +1,9 @@
+为视图添加动画只需向UIView 发送类方法即可
+    "animateWithDuration: animations:"
+        animation: 后参数为动画的“终点”
+    animateWithDuration: delay: options: animations: completion:
+        options 参数可以为0，不可为 nil
+    animateKeyframesWithDuration: delay: options: animations: completion:
+        此方法的animation 参数中为 UIView 调用类方法 "addKeyframeWithRelativeStartTime: relativeDuration: animations:" 设置动画关键帧
+    animateWithDuration: delay: usingSpringWithDamping: initialSpringVelocity: options: animations:
+        "弹簧效果"的动画
